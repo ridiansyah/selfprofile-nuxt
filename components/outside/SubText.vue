@@ -1,10 +1,7 @@
 <template>
   <p>
     {{ text }}
-    <span
-      :style="{ color: '#0288D1', cursor: 'pointer', fontWeight: 'bold' }"
-      @click="$router.push(destination)"
-    >
+    <span class="w-text-button" @click="$router.push(destination)">
       {{ text_click }}
     </span>
   </p>

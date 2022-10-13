@@ -41,7 +41,6 @@ export const actions = {
             "set/message",
             "Something went wrong. Please try again later..."
           );
-          this.$sentry.captureException(err);
         }
         return false;
       });
