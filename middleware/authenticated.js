@@ -1,17 +1,21 @@
 // Authentication middleware
 export default function Authenticated({ app, redirect }) {
   // If the user hasn't logged in, redirect to login page.
+
   if (
-    !app.$cookiz.get("selfprofile_token") &&
-    app.router.history.current.fullPath !== "/login"
+    app.$cookiz.get("selfprofile_token") === false &&
+    (app.router.history.current.fullPath !== "/login" ||
+      app.router.history.current.fullPath !== "/register" ||
+      app.router.history.current.fullPath !== "/register/otp")
   ) {
     console.log("masuk login");
-    redirect("/login");
+    return redirect("/login");
   } else if (
     app.$cookiz.get("selfprofile_token") &&
     app.router.history.current.fullPath !== "/"
   ) {
     console.log("masuk home");
-    redirect("/");
+    return redirect("/");
   }
+  return true;
 }
