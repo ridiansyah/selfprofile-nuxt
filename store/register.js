@@ -22,10 +22,7 @@ export const actions = {
         dispatch("set/show_alert", true);
         dispatch("set/status", "success");
         dispatch("set/message", "Registration Success");
-        this.$cookiz.set("selfprofile_userdata", response?.data?.data?.user, {
-          path: "/",
-          maxAge: 60 * 60 * 24 * 7,
-        });
+        dispatch("users/setData", response?.data?.data?.user, { root: true });
         return true;
       })
       .catch((err) => {

@@ -5,11 +5,6 @@ export const state = () => ({
   loading: false,
   status: "",
   message: "",
-
-  resend_show_alert: false,
-  resend_loading: false,
-  resend_status: "",
-  resend_message: "",
 });
 
 export const mutations = { ...defaultMutations(state()) };
@@ -17,46 +12,48 @@ export const mutations = { ...defaultMutations(state()) };
 export const plugins = [EasyAccess()];
 
 export const actions = {
-  resendOTP({ dispatch }, params) {
-    dispatch("set/resend_loading", true);
-
-    return this.$axios
-      .post(`api/v1/register/otp/request`, params)
+  getCredentials({ dispatch }, token) {
+    this.$axios
+      .get(`api/v1/oauth/credentials`, {
+        params: { access_token: token },
+      })
       .then((response) => {
-        dispatch("set/resend_loading", false);
-        dispatch("set/resend_show_alert", true);
-        dispatch("set/resend_status", "success");
-        dispatch("set/resend_message", "Resend OTP Success");
+        console.log("response: ", response?.data?.data?.user);
+        dispatch("set/loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "success");
+        dispatch("set/message", "Login Success");
         dispatch("users/setData", response?.data?.data?.user, { root: true });
         return true;
       })
       .catch((err) => {
         console.error(err);
-        dispatch("set/resend_loading", false);
-        dispatch("set/resend_show_alert", true);
-        dispatch("set/resend_status", "error");
-
-        if (err.response?.data?.error?.errors) {
-          dispatch("set/resend_message", err.response?.data?.error?.errors);
+        dispatch("set/loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "error");
+        this.$cookiz.remove("selfprofile_token");
+        if (err.response.data.error) {
+          dispatch("set/message", err.response?.data?.msg);
         } else {
           dispatch(
-            "set/resend_message",
+            "set/message",
             "Something went wrong. Please try again later..."
           );
         }
         return false;
       });
   },
-  verificationOTP({ dispatch }, params) {
+
+  handleLogin({ dispatch }, params) {
     dispatch("set/loading", true);
 
     return this.$axios
-      .post(`api/v1/register/otp/match`, params)
+      .post(`api/v1/oauth/sign_in`, params)
       .then((response) => {
-        dispatch("set/loading", false);
-        dispatch("set/show_alert", true);
-        dispatch("set/status", "success");
-        dispatch("set/message", "Resend OTP Success");
+        // dispatch("set/loading", false);
+        // dispatch("set/show_alert", true);
+        // dispatch("set/status", "success");
+        // dispatch("set/message", "Login Success");
         this.$cookiz.set(
           "selfprofile_token",
           response?.data?.data?.user?.access_token,
@@ -65,7 +62,10 @@ export const actions = {
             maxAge: 60 * 60 * 24 * 7,
           }
         );
-        return true;
+        return {
+          status: true,
+          token: response?.data?.data?.user?.access_token,
+        };
       })
       .catch((err) => {
         console.error(err);
@@ -81,7 +81,10 @@ export const actions = {
             "Something went wrong. Please try again later..."
           );
         }
-        return false;
+        return {
+          status: false,
+          token: null,
+        };
       });
   },
 };
