@@ -3,8 +3,8 @@
     :loading="is_loading"
     :disabled="is_loading"
     block
-    @click="is_loading = true"
     color="#ffa000"
+    @click="handler"
   >
     {{ text }}
     <template v-slot:loader>
@@ -19,6 +19,7 @@ export default {
   props: {
     is_loading: { type: Boolean, default: false },
     text: { type: String, default: "" },
+    handler: { type: Function, default: () => {} },
   },
 };
 </script>

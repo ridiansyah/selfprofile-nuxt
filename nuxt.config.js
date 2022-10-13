@@ -39,14 +39,19 @@ export default {
   target: "server",
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios", "vue-sweetalert2/nuxt", "cookie-universal-nuxt"],
+  modules: [
+    "@nuxtjs/axios",
+    "vue-sweetalert2/nuxt",
+    ["cookie-universal-nuxt", { alias: "cookiz", parseJSON: false }],
+  ],
 
   axios: { proxy: true },
   proxy: {
-    "/api/": {
-      target: process.env.API_URL,
-      pathRewrite: { "^/api/": "/" },
-    },
+    // "/api/": {
+    //   target: process.env.API_URL,
+    //   pathRewrite: { "^/api/": "/" },
+    // },
+    "/api/": process.env.API_URL,
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
