@@ -27,7 +27,6 @@
 <script>
 export default {
   name: "OutsideLayout",
-  middleware: ["authenticated"],
   //   data() {
   //     return {
   //       logoutButton: 'top',
