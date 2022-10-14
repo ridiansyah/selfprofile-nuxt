@@ -24,11 +24,18 @@
               </v-btn></v-col
             >
             <v-col lg="6" md="6" sm="12" class="w-col-area-button"
-              ><v-btn value="left" block color="red">
+              ><v-btn
+                value="left"
+                block
+                color="red"
+                @click="handleLogout"
+                :disabled="logout_loading"
+              >
                 <v-icon left> mdi-logout </v-icon>
-                <span>Log Out</span>
-              </v-btn></v-col
-            >
+                <span v-if="logout_loading">Loading...</span>
+                <span v-else>Log Out</span>
+              </v-btn>
+            </v-col>
           </v-row>
         </v-col>
       </v-row>
@@ -249,8 +256,10 @@ export default {
       return this.$store.get("profile/message");
     },
     data() {
-      console.log("DATA: ", this.$store.get("profile/data"));
       return this.$store.get("profile/data");
+    },
+    logout_loading() {
+      return this.$store.get("auth/logout_loading");
     },
   },
   watch: {
@@ -272,6 +281,22 @@ export default {
   methods: {
     getCredentials() {
       this.$store.dispatch("profile/getProfile");
+    },
+    async handleLogout() {
+      let tempFormData = new FormData();
+      tempFormData.append(
+        "access_token",
+        this.$cookiz.get("selfprofile_token")
+      );
+      tempFormData.append("confirm", 1);
+
+      const statusAPI = await this.$store.dispatch(
+        "auth/handleLogout",
+        tempFormData
+      );
+      if (statusAPI) {
+        this.$router.push("/login");
+      }
     },
   },
 };
