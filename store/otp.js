@@ -27,7 +27,11 @@ export const actions = {
         dispatch("set/resend_show_alert", true);
         dispatch("set/resend_status", "success");
         dispatch("set/resend_message", "Resend OTP Success");
-        dispatch("users/setData", response?.data?.data?.user, { root: true });
+        // dispatch("users/setData", response?.data?.data?.user, { root: true });
+        localStorage.setItem(
+          "selfprofile_userdata",
+          JSON.stringify(response?.data?.data?.user)
+        );
         return true;
       })
       .catch((err) => {

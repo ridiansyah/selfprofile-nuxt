@@ -23,7 +23,11 @@ export const actions = {
         dispatch("set/show_alert", true);
         dispatch("set/status", "success");
         dispatch("set/message", "Login Success");
-        dispatch("users/setData", response?.data?.data?.user, { root: true });
+        // dispatch("users/setData", response?.data?.data?.user, { root: true });
+        localStorage.setItem(
+          "selfprofile_userdata",
+          JSON.stringify(response?.data?.data?.user)
+        );
         return true;
       })
       .catch((err) => {
