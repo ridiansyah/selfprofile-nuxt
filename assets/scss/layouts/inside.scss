@@ -1,3 +1,57 @@
 .w-container {
   padding: 18px;
+  .w-cover-card {
+    width: 100%;
+    position: relative;
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.1);
+    height: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    .w-button-cover {
+      position: absolute;
+      bottom: 18px;
+      right: 18px;
+    }
+    .w-cover-img {
+      height: 300px;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      left: 0px;
+      background-size: cover;
+      background-position: center center;
+      border-radius: 8px;
+    }
+    .w-profile-card {
+      background-color: #f5f5f5;
+      position: absolute;
+      top: 30px;
+      left: 50px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      .w-profile-img {
+        width: 100%;
+        height: 240px;
+        width: 240px;
+        background-size: cover;
+        background-position: center center;
+        position: relative;
+      }
+    }
+  }
+
+  .w-name {
+    font-size: 48px;
+    font-weight: bold;
+    padding-top: 0px;
+    padding-left: 50px;
+  }
+  .w-col-area-button {
+    @media screen and (min-width: 900px) {
+      padding-top: 30px;
+    }
+  }
+  .w-gallery-img {
+    cursor: pointer;
+  }
 }

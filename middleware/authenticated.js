@@ -3,7 +3,7 @@ export default function Authenticated({ app, redirect }) {
   // If the user hasn't logged in, redirect to login page.
   if (process.server) {
     if (
-      app.$cookiz.get("selfprofile_token") === false &&
+      !app.$cookiz.get("selfprofile_token") &&
       (app.router.history.current.fullPath !== "/login" ||
         app.router.history.current.fullPath !== "/register" ||
         app.router.history.current.fullPath !== "/register/otp")
@@ -17,7 +17,9 @@ export default function Authenticated({ app, redirect }) {
       console.log("masuk home");
       return redirect("/");
     }
+    console.log("DILUAR");
     return true;
   }
+  console.log("DILUAR BANGET");
   return true;
 }

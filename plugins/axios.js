@@ -3,11 +3,10 @@ import { set } from "@/utils";
 const AxiosPlugin = ({ $axios, app, route, store, redirect }) => {
   // Handle Axios onRequest
   $axios.onRequest((config) => {
-    if (route.name.includes("admin") || route.name.includes("auth")) {
+    if (route.fullPath === "/") {
       const token = app.$cookiz.get("selfprofile_token");
-
       if (!config.headers.hasOwnProperty("Authorization") && token) {
-        set(config.headers, "Authorization", `Bearer ${token}`);
+        set(config.headers, "Authorization", `${token}`);
       }
     }
   });
