@@ -9,6 +9,8 @@ export const state = () => ({
   about_loading: false,
   career_loading: false,
   education_loading: false,
+  upload_loading: false,
+  avatar_loading: false,
 });
 
 export const mutations = { ...defaultMutations(state()) };
@@ -122,6 +124,96 @@ export const actions = {
       .catch((err) => {
         console.error(err);
         dispatch("set/education_loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "error");
+
+        if (err.response?.data?.error?.errors) {
+          dispatch("set/message", err.response?.data?.error?.errors);
+        } else {
+          dispatch(
+            "set/message",
+            "Something went wrong. Please try again later..."
+          );
+        }
+        return false;
+      });
+  },
+  uploadCover({ dispatch }, params) {
+    dispatch("set/upload_loading", true);
+
+    return this.$axios
+      .post(`api/v1/uploads/cover`, params)
+      .then((response) => {
+        dispatch("set/upload_loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "success");
+        dispatch("set/message", "Upload Cover Success");
+        dispatch("getProfile");
+        return true;
+      })
+      .catch((err) => {
+        console.error(err);
+        dispatch("set/upload_loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "error");
+
+        if (err.response?.data?.error?.errors) {
+          dispatch("set/message", err.response?.data?.error?.errors);
+        } else {
+          dispatch(
+            "set/message",
+            "Something went wrong. Please try again later..."
+          );
+        }
+        return false;
+      });
+  },
+  uploadGallery({ dispatch }, params) {
+    dispatch("set/upload_loading", true);
+
+    return this.$axios
+      .post(`api/v1/uploads/profile`, params)
+      .then((response) => {
+        dispatch("set/upload_loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "success");
+        dispatch("set/message", "Upload Cover Success");
+        dispatch("getProfile");
+        return true;
+      })
+      .catch((err) => {
+        console.error(err);
+        dispatch("set/upload_loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "error");
+
+        if (err.response?.data?.error?.errors) {
+          dispatch("set/message", err.response?.data?.error?.errors);
+        } else {
+          dispatch(
+            "set/message",
+            "Something went wrong. Please try again later..."
+          );
+        }
+        return false;
+      });
+  },
+  chooseAvatar({ dispatch }, params) {
+    dispatch("set/avatar_loading", true);
+
+    return this.$axios
+      .post(`api/v1/uploads/profile/default`, params)
+      .then((response) => {
+        dispatch("set/avatar_loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "success");
+        dispatch("set/message", "Upload Cover Success");
+        dispatch("getProfile");
+        return true;
+      })
+      .catch((err) => {
+        console.error(err);
+        dispatch("set/avatar_loading", false);
         dispatch("set/show_alert", true);
         dispatch("set/status", "error");
 

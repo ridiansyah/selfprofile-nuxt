@@ -12,31 +12,21 @@
         :cover="data?.cover_picture?.url"
       />
       <v-row>
-        <v-col lg="8" md="12" sm="12">
+        <v-col lg="10" md="8" sm="12">
           <p class="w-name">{{ data?.name }}</p>
         </v-col>
-        <v-col lg="4" md="12" sm="12">
-          <v-row>
-            <v-col lg="6" md="6" sm="12" class="w-col-area-button"
-              ><v-btn value="left" block>
-                <v-icon left> mdi-camera-account </v-icon>
-                <span>Change Avatar</span>
-              </v-btn></v-col
-            >
-            <v-col lg="6" md="6" sm="12" class="w-col-area-button"
-              ><v-btn
-                value="left"
-                block
-                color="red"
-                @click="handleLogout"
-                :disabled="logout_loading"
-              >
-                <v-icon left> mdi-logout </v-icon>
-                <span v-if="logout_loading">Loading...</span>
-                <span v-else>Log Out</span>
-              </v-btn>
-            </v-col>
-          </v-row>
+        <v-col lg="2" md="4" sm="12" class="w-col-area-button"
+          ><v-btn
+            value="left"
+            block
+            color="red"
+            @click="handleLogout"
+            :disabled="logout_loading"
+          >
+            <v-icon left> mdi-logout </v-icon>
+            <span v-if="logout_loading">Loading...</span>
+            <span v-else>Log Out</span>
+          </v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -50,60 +40,7 @@
           <CareerAndEducationBase :data="data" />
         </v-col>
         <v-col lg="8" md="12" sm="12">
-          <v-card elevation="2">
-            <div class="d-flex justify-space-between align-center">
-              <v-card-title> Gallery </v-card-title>
-              <v-btn depressed rounded small>Upload Photo</v-btn>
-            </div>
-            <v-card-text>
-              <v-row cols="12" sm="9" offset-sm="1">
-                <v-col
-                  v-for="(obj, index) in data?.user_pictures ?? []"
-                  :key="index"
-                  class="d-flex child-flex"
-                  cols="4"
-                >
-                  <v-card flat tile class="d-flex w-gallery-img">
-                    <v-img
-                      :src="obj.picture?.url"
-                      @click.stop="
-                        (dialog = true),
-                          (id = index),
-                          (img_src = obj.picture?.url)
-                      "
-                      aspect-ratio="1"
-                      class="grey lighten-2"
-                    >
-                      <template v-slot:placeholder>
-                        <v-row
-                          class="fill-height ma-0"
-                          align="center"
-                          justify="center"
-                        >
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </v-card>
-                </v-col>
-                <v-dialog v-model="dialog" isDark="">
-                  <v-card>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-
-                      <v-btn @click="dialog = false" color="red darken-1" text>
-                        Close
-                      </v-btn>
-                    </v-card-actions>
-                    <v-img :src="img_src"></v-img>
-                  </v-card>
-                </v-dialog>
-              </v-row>
-            </v-card-text>
-          </v-card>
+          <GalleryBase />
         </v-col>
       </v-row>
     </div>
@@ -111,53 +48,24 @@
 </template>
 
 <script>
-import HeaderCard from "@/components/home/HeaderCard";
+import HeaderCard from "@/components/home/header/Base";
 import AboutBase from "@/components/home/about/Base";
 import AboutEditor from "@/components/home/about/Editor";
 import CareerAndEducationBase from "@/components/home/careerAndEducation/Base";
+import GalleryBase from "@/components/home/gallery/Base";
 
 export default {
   name: "IndexPage",
   layout: "inside",
-  components: { HeaderCard, AboutBase, AboutEditor, CareerAndEducationBase },
+  components: {
+    HeaderCard,
+    AboutBase,
+    AboutEditor,
+    CareerAndEducationBase,
+    GalleryBase,
+  },
   data() {
     return {
-      dialog: false,
-      img_src: "",
-      images: [
-        {
-          id: 1,
-          img_src: "https://dummyimage.com/400x400/591559/fff",
-        },
-        {
-          id: 2,
-          img_src: "https://dummyimage.com/400x400/591559/fff",
-        },
-        {
-          id: 3,
-          img_src: "https://dummyimage.com/400x400/591559/fff",
-        },
-        {
-          id: 4,
-          img_src: "https://dummyimage.com/400x400/591559/fff",
-        },
-        {
-          id: 5,
-          img_src: "https://dummyimage.com/400x400/591559/fff",
-        },
-        {
-          id: 6,
-          img_src: "https://dummyimage.com/400x400/591559/fff",
-        },
-        {
-          id: 7,
-          img_src: "https://dummyimage.com/400x400/591559/fff",
-        },
-        {
-          id: 8,
-          img_src: "https://dummyimage.com/400x400/591559/fff",
-        },
-      ],
       about_editor_open: false,
       about_editor_data: {
         name: "",
