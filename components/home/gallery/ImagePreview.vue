@@ -91,13 +91,26 @@ export default {
       }
     },
     handleDelete() {
-      const statusAPI = this.$store.dispatch(
-        "profile/deletePhoto",
-        this.selected_img?.id
-      );
-      if (statusAPI) {
-        this.is_open = false;
-      }
+      this.$swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+      }).then(async (result) => {
+        if (result.value) {
+          const statusAPI = this.$store.dispatch(
+            "profile/deletePhoto",
+            this.selected_img?.id
+          );
+          if (statusAPI) {
+            this.is_open = false;
+          }
+        }
+      });
     },
   },
 };
