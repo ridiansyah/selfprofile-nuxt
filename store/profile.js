@@ -11,6 +11,7 @@ export const state = () => ({
   education_loading: false,
   upload_loading: false,
   avatar_loading: false,
+  deletephoto_loading: false,
 });
 
 export const mutations = { ...defaultMutations(state()) };
@@ -214,6 +215,40 @@ export const actions = {
       .catch((err) => {
         console.error(err);
         dispatch("set/avatar_loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "error");
+
+        if (err.response?.data?.error?.errors) {
+          dispatch("set/message", err.response?.data?.error?.errors);
+        } else {
+          dispatch(
+            "set/message",
+            "Something went wrong. Please try again later..."
+          );
+        }
+        return false;
+      });
+  },
+  deletePhoto({ dispatch }, params) {
+    dispatch("set/deletephoto_loading", true);
+
+    return this.$axios
+      .delete(`api/v1/uploads/profile`, {
+        data: {
+          id: params,
+        },
+      })
+      .then((response) => {
+        dispatch("set/deletephoto_loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "success");
+        dispatch("set/message", "Upload Cover Success");
+        dispatch("getProfile");
+        return true;
+      })
+      .catch((err) => {
+        console.error(err);
+        dispatch("set/deletephoto_loading", false);
         dispatch("set/show_alert", true);
         dispatch("set/status", "error");
 
