@@ -41,10 +41,7 @@ export const actions = {
             "Something went wrong. Please try again later..."
           );
         }
-        return {
-          status: false,
-          token: null,
-        };
+        return false;
       });
   },
 };
