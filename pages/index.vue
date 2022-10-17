@@ -41,50 +41,11 @@
       </v-row>
       <v-row>
         <v-col lg="4" md="12" sm="12">
-          <v-card elevation="2">
-            <div class="d-flex justify-space-between align-center">
-              <v-card-title> About </v-card-title>
-              <v-btn depressed rounded small>Edit</v-btn>
-            </div>
-
-            <v-card-text>
-              <v-textarea
-                outlined
-                name="bio-textarea"
-                label="Bio"
-                disabled
-                :value="data.bio"
-              ></v-textarea>
-              <v-text-field
-                outlined
-                label="Birthday"
-                prepend-inner-icon="mdi-cake"
-                disabled
-                :value="data?.birthday + ' (' + data?.age + ' y.o)'"
-              ></v-text-field>
-              <v-text-field
-                outlined
-                label="Gender"
-                prepend-inner-icon="mdi-gender-male-female"
-                disabled
-                :value="data?.gender"
-              ></v-text-field>
-              <v-text-field
-                outlined
-                label="Zodiac"
-                prepend-inner-icon="mdi-zodiac-capricorn"
-                disabled
-                :value="data?.zodiac"
-              ></v-text-field>
-              <v-text-field
-                outlined
-                label="Hometown"
-                prepend-inner-icon="mdi-home-map-marker"
-                disabled
-                :value="data?.hometown"
-              ></v-text-field>
-            </v-card-text>
-          </v-card>
+          <AboutBase :data="data" />
+          <AboutEditor
+            :about_editor_open="about_editor_open"
+            :props_data="data"
+          />
           <br />
           <v-card elevation="2">
             <v-card-title> Career & Education </v-card-title>
@@ -154,7 +115,7 @@
                       @click.stop="
                         (dialog = true),
                           (id = index),
-                          (imgSrc = obj.picture?.url)
+                          (img_src = obj.picture?.url)
                       "
                       aspect-ratio="1"
                       class="grey lighten-2"
@@ -183,7 +144,7 @@
                         Close
                       </v-btn>
                     </v-card-actions>
-                    <v-img :src="imgSrc"></v-img>
+                    <v-img :src="img_src"></v-img>
                   </v-card>
                 </v-dialog>
               </v-row>
@@ -198,48 +159,59 @@
 <script>
 import HeaderCard from "@/components/home/HeaderCard";
 
+import AboutBase from "@/components/home/about/Base";
+import AboutEditor from "@/components/home/about/Editor";
+
 export default {
   name: "IndexPage",
   layout: "inside",
-  components: { HeaderCard },
+  components: { HeaderCard, AboutBase, AboutEditor },
   data() {
     return {
       dialog: false,
-      imgSrc: "",
+      img_src: "",
       images: [
         {
           id: 1,
-          imgSrc: "https://dummyimage.com/400x400/591559/fff",
+          img_src: "https://dummyimage.com/400x400/591559/fff",
         },
         {
           id: 2,
-          imgSrc: "https://dummyimage.com/400x400/591559/fff",
+          img_src: "https://dummyimage.com/400x400/591559/fff",
         },
         {
           id: 3,
-          imgSrc: "https://dummyimage.com/400x400/591559/fff",
+          img_src: "https://dummyimage.com/400x400/591559/fff",
         },
         {
           id: 4,
-          imgSrc: "https://dummyimage.com/400x400/591559/fff",
+          img_src: "https://dummyimage.com/400x400/591559/fff",
         },
         {
           id: 5,
-          imgSrc: "https://dummyimage.com/400x400/591559/fff",
+          img_src: "https://dummyimage.com/400x400/591559/fff",
         },
         {
           id: 6,
-          imgSrc: "https://dummyimage.com/400x400/591559/fff",
+          img_src: "https://dummyimage.com/400x400/591559/fff",
         },
         {
           id: 7,
-          imgSrc: "https://dummyimage.com/400x400/591559/fff",
+          img_src: "https://dummyimage.com/400x400/591559/fff",
         },
         {
           id: 8,
-          imgSrc: "https://dummyimage.com/400x400/591559/fff",
+          img_src: "https://dummyimage.com/400x400/591559/fff",
         },
       ],
+      about_editor_open: false,
+      about_editor_data: {
+        name: "",
+        gender: 0,
+        birthday: null,
+        hometown: "",
+        bio: "",
+      },
     };
   },
   computed: {
@@ -297,6 +269,9 @@ export default {
       if (statusAPI) {
         this.$router.push("/login");
       }
+    },
+    handleOpenAbout(value) {
+      this.about_editor_open = value;
     },
   },
 };
