@@ -7,6 +7,8 @@ export const state = () => ({
   status: "",
   message: "",
   about_loading: false,
+  career_loading: false,
+  education_loading: false,
 });
 
 export const mutations = { ...defaultMutations(state()) };
@@ -60,6 +62,66 @@ export const actions = {
       .catch((err) => {
         console.error(err);
         dispatch("set/loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "error");
+
+        if (err.response?.data?.error?.errors) {
+          dispatch("set/message", err.response?.data?.error?.errors);
+        } else {
+          dispatch(
+            "set/message",
+            "Something went wrong. Please try again later..."
+          );
+        }
+        return false;
+      });
+  },
+  postCareer({ dispatch }, params) {
+    dispatch("set/career_loading", true);
+
+    return this.$axios
+      .post(`api/v1/profile/career`, params)
+      .then((response) => {
+        dispatch("set/career_loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "success");
+        dispatch("set/message", "Edit Career Success");
+        dispatch("getProfile");
+        return true;
+      })
+      .catch((err) => {
+        console.error(err);
+        dispatch("set/career_loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "error");
+
+        if (err.response?.data?.error?.errors) {
+          dispatch("set/message", err.response?.data?.error?.errors);
+        } else {
+          dispatch(
+            "set/message",
+            "Something went wrong. Please try again later..."
+          );
+        }
+        return false;
+      });
+  },
+  postEducation({ dispatch }, params) {
+    dispatch("set/education_loading", true);
+
+    return this.$axios
+      .post(`api/v1/profile/education`, params)
+      .then((response) => {
+        dispatch("set/education_loading", false);
+        dispatch("set/show_alert", true);
+        dispatch("set/status", "success");
+        dispatch("set/message", "Edit Career Success");
+        dispatch("getProfile");
+        return true;
+      })
+      .catch((err) => {
+        console.error(err);
+        dispatch("set/education_loading", false);
         dispatch("set/show_alert", true);
         dispatch("set/status", "error");
 

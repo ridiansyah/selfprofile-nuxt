@@ -194,7 +194,6 @@ export default {
     handleSave() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.$store.set("profile/about_loading", true);
         let tempFormData = new FormData();
         tempFormData.append("name", this.form?.name);
         tempFormData.append("gender", this.form?.gender);

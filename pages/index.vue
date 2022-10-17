@@ -47,53 +47,7 @@
             :props_data="data"
           />
           <br />
-          <v-card elevation="2">
-            <v-card-title> Career & Education </v-card-title>
-            <v-list-item>
-              <v-list-item-avatar>
-                <v-icon dark>mdi-briefcase-variant</v-icon>
-              </v-list-item-avatar>
-
-              <v-list-item-content>
-                <v-list-item-title>{{
-                  data?.career?.company_name
-                }}</v-list-item-title>
-
-                <v-list-item-subtitle
-                  >{{ data?.career?.starting_from }} until
-                  {{ data?.career?.ending_in }}</v-list-item-subtitle
-                >
-              </v-list-item-content>
-
-              <v-list-item-action>
-                <v-btn icon>
-                  <v-icon color="grey lighten-1">mdi-pencil</v-icon>
-                </v-btn>
-              </v-list-item-action>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-avatar>
-                <v-icon dark>mdi-book-open-variant</v-icon>
-              </v-list-item-avatar>
-
-              <v-list-item-content>
-                <v-list-item-title>{{
-                  data?.education?.school_name
-                }}</v-list-item-title>
-
-                <v-list-item-subtitle>{{
-                  data?.education?.graduation_time
-                }}</v-list-item-subtitle>
-              </v-list-item-content>
-
-              <v-list-item-action>
-                <v-btn icon>
-                  <v-icon color="grey lighten-1">mdi-pencil</v-icon>
-                </v-btn>
-              </v-list-item-action>
-            </v-list-item>
-            <v-card-text> </v-card-text>
-          </v-card>
+          <CareerAndEducationBase :data="data" />
         </v-col>
         <v-col lg="8" md="12" sm="12">
           <v-card elevation="2">
@@ -158,14 +112,14 @@
 
 <script>
 import HeaderCard from "@/components/home/HeaderCard";
-
 import AboutBase from "@/components/home/about/Base";
 import AboutEditor from "@/components/home/about/Editor";
+import CareerAndEducationBase from "@/components/home/careerAndEducation/Base";
 
 export default {
   name: "IndexPage",
   layout: "inside",
-  components: { HeaderCard, AboutBase, AboutEditor },
+  components: { HeaderCard, AboutBase, AboutEditor, CareerAndEducationBase },
   data() {
     return {
       dialog: false,
