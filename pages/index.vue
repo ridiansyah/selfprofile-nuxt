@@ -32,10 +32,6 @@
       <v-row>
         <v-col lg="4" md="12" sm="12">
           <AboutBase :data="data" />
-          <AboutEditor
-            :about_editor_open="about_editor_open"
-            :props_data="data"
-          />
           <br />
           <CareerAndEducationBase :data="data" />
         </v-col>
@@ -50,7 +46,6 @@
 <script>
 import HeaderCard from "@/components/home/header/Base";
 import AboutBase from "@/components/home/about/Base";
-import AboutEditor from "@/components/home/about/Editor";
 import CareerAndEducationBase from "@/components/home/careerAndEducation/Base";
 import GalleryBase from "@/components/home/gallery/Base";
 
@@ -60,21 +55,8 @@ export default {
   components: {
     HeaderCard,
     AboutBase,
-    AboutEditor,
     CareerAndEducationBase,
     GalleryBase,
-  },
-  data() {
-    return {
-      about_editor_open: false,
-      about_editor_data: {
-        name: "",
-        gender: 0,
-        birthday: null,
-        hometown: "",
-        bio: "",
-      },
-    };
   },
   computed: {
     loading() {
@@ -131,9 +113,6 @@ export default {
       if (statusAPI) {
         this.$router.push("/login");
       }
-    },
-    handleOpenAbout(value) {
-      this.about_editor_open = value;
     },
   },
 };
