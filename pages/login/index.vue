@@ -142,14 +142,12 @@ export default {
       const statusAPI = this.$store.dispatch("auth/getCredentials", token);
       console.log("statusAPI: ", statusAPI);
       if (statusAPI) {
-        // console.log("SUKSES");
         this.$router.push("/");
       }
     },
     async handleLogin() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        // this.$store.set("register/loading", true);
         let tempFormData = new FormData();
         tempFormData.append("phone", "62" + this.form?.phone);
         tempFormData.append("password", this.form?.password);
@@ -162,8 +160,6 @@ export default {
           tempFormData
         );
         if (statusAPI?.status) {
-          // console.log("SUKSES");
-          // this.$router.push("/");
           this.getCredentials(statusAPI?.token);
         }
       }

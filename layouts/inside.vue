@@ -23,10 +23,5 @@
 <script>
 export default {
   name: "InsideLayout",
-  //   data() {
-  //     return {
-  //       logoutButton: 'top',
-  //     }
-  //   },
 };
 </script>

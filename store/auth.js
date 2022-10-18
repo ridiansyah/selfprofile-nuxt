@@ -64,7 +64,6 @@ export const actions = {
         dispatch("set/login_show_alert", true);
         dispatch("set/status", "success");
         dispatch("set/message", "Login Success");
-        // dispatch("users/setData", response?.data?.data?.user, { root: true });
         localStorage.setItem(
           "selfprofile_userdata",
           JSON.stringify(response?.data?.data?.user)
@@ -95,10 +94,6 @@ export const actions = {
     return this.$axios
       .post(`api/v1/oauth/sign_in`, params)
       .then((response) => {
-        // dispatch("set/login_loading", false);
-        // dispatch("set/login_show_alert", true);
-        // dispatch("set/status", "success");
-        // dispatch("set/message", "Login Success");
         this.$cookiz.set(
           "selfprofile_token",
           response?.data?.data?.user?.access_token,
@@ -143,7 +138,6 @@ export const actions = {
         dispatch("set/register_show_alert", true);
         dispatch("set/status", "success");
         dispatch("set/message", "Registration Success");
-        // dispatch("users/setData", response?.data?.data?.user, { root: true });
         localStorage.setItem(
           "selfprofile_userdata",
           JSON.stringify(response?.data?.data?.user)
@@ -178,7 +172,6 @@ export const actions = {
         dispatch("set/resend_show_alert", true);
         dispatch("set/resend_status", "success");
         dispatch("set/resend_message", "Resend OTP Success");
-        // dispatch("users/setData", response?.data?.data?.user, { root: true });
         localStorage.setItem(
           "selfprofile_userdata",
           JSON.stringify(response?.data?.data?.user)
