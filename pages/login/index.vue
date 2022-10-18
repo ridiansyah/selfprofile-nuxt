@@ -78,16 +78,16 @@ export default {
   },
   computed: {
     login_loading() {
-      return this.$store.get("login/loading");
+      return this.$store.get("auth/login_loading");
     },
     login_show_alert() {
-      return this.$store.get("login/show_alert");
+      return this.$store.get("auth/login_show_alert");
     },
     login_status() {
-      return this.$store.get("login/status");
+      return this.$store.get("auth/status");
     },
     login_message() {
-      return this.$store.get("login/message");
+      return this.$store.get("auth/message");
     },
 
     phoneErrors() {
@@ -120,7 +120,7 @@ export default {
           text: this.login_message,
         });
 
-        this.$store.set("login/show_alert", false);
+        this.$store.set("auth/login_show_alert", false);
       }
     },
   },
@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     getCredentials(token) {
-      const statusAPI = this.$store.dispatch("login/getCredentials", token);
+      const statusAPI = this.$store.dispatch("auth/getCredentials", token);
       console.log("statusAPI: ", statusAPI);
       if (statusAPI) {
         // console.log("SUKSES");
@@ -158,7 +158,7 @@ export default {
         tempFormData.append("device_type", this.form?.device_type);
 
         const statusAPI = await this.$store.dispatch(
-          "login/handleLogin",
+          "auth/handleLogin",
           tempFormData
         );
         if (statusAPI?.status) {

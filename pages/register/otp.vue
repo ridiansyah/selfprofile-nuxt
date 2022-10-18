@@ -62,31 +62,33 @@ export default {
   },
   computed: {
     user_data() {
-      return JSON.parse(this.$cookiz.get("selfprofile_userdata"));
+      return localStorage.getItem("selfprofile_userdata")
+        ? JSON.parse(localStorage.getItem("selfprofile_userdata"))
+        : {};
     },
     otp_loading() {
-      return this.$store.get("otp/loading");
+      return this.$store.get("auth/otp_loading");
     },
     otp_show_alert() {
-      return this.$store.get("otp/show_alert");
+      return this.$store.get("auth/otp_show_alert");
     },
     otp_status() {
-      return this.$store.get("otp/status");
+      return this.$store.get("auth/status");
     },
     otp_message() {
-      return this.$store.get("otp/message");
+      return this.$store.get("auth/message");
     },
     otp_resend_show_alert() {
-      return this.$store.get("otp/resend_show_alert");
+      return this.$store.get("auth/resend_show_alert");
     },
     otp_resend_loading() {
-      return this.$store.get("otp/resend_loading");
+      return this.$store.get("auth/resend_loading");
     },
     otp_resend_status() {
-      return this.$store.get("otp/resend_status");
+      return this.$store.get("auth/resend_status");
     },
     otp_resend_message() {
-      return this.$store.get("otp/resend_message");
+      return this.$store.get("auth/resend_message");
     },
 
     otpErrors() {
@@ -112,7 +114,7 @@ export default {
           text: this.otp_resend_message,
         });
 
-        this.$store.set("otp/resend_show_alert", false);
+        this.$store.set("auth/resend_show_alert", false);
       }
     },
     otp_show_alert(val) {
@@ -123,7 +125,7 @@ export default {
           text: this.otp_message,
         });
 
-        this.$store.set("otp/show_alert", false);
+        this.$store.set("auth/otp_show_alert", false);
       }
     },
   },
@@ -132,7 +134,7 @@ export default {
       let tempFormData = new FormData();
       tempFormData.append("phone", this.user_data?.phone);
 
-      await this.$store.dispatch("otp/resendOTP", tempFormData);
+      await this.$store.dispatch("auth/resendOTP", tempFormData);
     },
     async handleVerif() {
       this.$v.$touch();
@@ -142,7 +144,7 @@ export default {
         tempFormData.append("otp_code", this.form.otp);
 
         const statusAPI = await this.$store.dispatch(
-          "otp/verificationOTP",
+          "auth/verificationOTP",
           tempFormData
         );
         if (statusAPI) {

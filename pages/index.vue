@@ -77,6 +77,15 @@ export default {
     logout_loading() {
       return this.$store.get("auth/logout_loading");
     },
+    logout_show_alert() {
+      return this.$store.get("auth/logout_show_alert");
+    },
+    auth_status() {
+      return this.$store.get("auth/status");
+    },
+    auth_message() {
+      return this.$store.get("auth/message");
+    },
   },
   watch: {
     show_alert(val) {
@@ -88,6 +97,17 @@ export default {
         });
 
         this.$store.set("profile/show_alert", false);
+      }
+    },
+    logout_show_alert(val) {
+      if (val) {
+        this.$notify({
+          title: this.logout_status === "success" ? "Success" : "Error",
+          type: this.logout_status,
+          text: this.logout_message,
+        });
+
+        this.$store.set("auth/logout_show_alert", false);
       }
     },
   },

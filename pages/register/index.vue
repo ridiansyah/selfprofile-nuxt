@@ -114,16 +114,16 @@ export default {
     },
 
     register_loading() {
-      return this.$store.get("register/loading");
+      return this.$store.get("auth/register_loading");
     },
     register_show_alert() {
-      return this.$store.get("register/show_alert");
+      return this.$store.get("auth/register_show_alert");
     },
     register_status() {
-      return this.$store.get("register/status");
+      return this.$store.get("auth/status");
     },
     register_message() {
-      return this.$store.get("register/message");
+      return this.$store.get("auth/message");
     },
 
     phoneErrors() {
@@ -182,7 +182,7 @@ export default {
           text: this.register_message,
         });
 
-        this.$store.set("register/show_alert", false);
+        this.$store.set("auth/register_show_alert", false);
       }
     },
   },
@@ -196,7 +196,7 @@ export default {
     async handleRegister() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        // this.$store.set("register/loading", true);
+        // this.$store.set("auth/register_loading", true);
         let tempFormData = new FormData();
         tempFormData.append("phone", "62" + this.form?.phone);
         tempFormData.append("password", this.form?.password);
@@ -206,7 +206,7 @@ export default {
         tempFormData.append("device_type", this.form?.device_type);
 
         const createSuccess = await this.$store.dispatch(
-          "register/createRegister",
+          "auth/createRegister",
           tempFormData
         );
         if (createSuccess) {
