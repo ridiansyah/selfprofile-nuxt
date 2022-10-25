@@ -17,7 +17,7 @@ const AxiosPlugin = ({ $axios, app, route, store, redirect }) => {
     console.log("code: ", code);
     if (code === 401) {
       app.$cookiz.remove("selfprofile_token");
-      app.$router.push("/login");
+      redirect("/login");
       return;
     }
 

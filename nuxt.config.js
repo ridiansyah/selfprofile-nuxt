@@ -47,7 +47,17 @@ export default {
     "@nuxtjs/axios",
     "vue-sweetalert2/nuxt",
     ["cookie-universal-nuxt", { alias: "cookiz", parseJSON: false }],
+    "@privyid/nuxt-oauth2",
   ],
+  oauth: {
+    sessionName: "mySession",
+    authPath: "/admin",
+    secretKey: process.env.SECRET_KEY,
+    oauthHost: process.env.OAUTH_HOST,
+    oauthClientId: process.env.OAUTH_CLIENT_ID,
+    oauthClientSecret: process.env.OAUTH_CLIENT_SECRET,
+    scopes: ["public", "personal_identity"],
+  },
 
   axios: { proxy: true },
   proxy: {

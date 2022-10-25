@@ -4,22 +4,18 @@ export default function Authenticated({ app, redirect }) {
   if (process.server) {
     if (
       !app.$cookiz.get("selfprofile_token") &&
-      (app.router.history.current.fullPath !== "/login" ||
-        app.router.history.current.fullPath !== "/register" ||
-        app.router.history.current.fullPath !== "/register/otp")
+      app.router.history.current.fullPath === "/"
     ) {
-      console.log("masuk login");
       return redirect("/login");
     } else if (
       app.$cookiz.get("selfprofile_token") &&
-      app.router.history.current.fullPath !== "/"
+      (app.router.history.current.fullPath === "/login" ||
+        app.router.history.current.fullPath === "/register" ||
+        app.router.history.current.fullPath === "/register/otp")
     ) {
-      console.log("masuk home");
       return redirect("/");
     }
-    console.log("DILUAR");
     return true;
   }
-  console.log("DILUAR BANGET");
   return true;
 }
