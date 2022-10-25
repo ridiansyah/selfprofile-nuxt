@@ -21,6 +21,10 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
+  publicRuntimeConfig: {
+    logoutURL: process.env.LOGOUT_URL,
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ["@/assets/scss/main.scss"],
 
@@ -61,10 +65,6 @@ export default {
 
   axios: { proxy: true },
   proxy: {
-    // "/api/": {
-    //   target: process.env.API_URL,
-    //   pathRewrite: { "^/api/": "/" },
-    // },
     "/api/": process.env.API_URL,
   },
 
